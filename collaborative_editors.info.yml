@@ -1,6 +1,6 @@
-name: Collaborative Editor
+name: Collaborative Editors
 description: Allows integration of third-party Collaborative Editor API.
-package: Collaborative Editor
+package: Collaborative Editors
 
 type: module
 core: 8.x

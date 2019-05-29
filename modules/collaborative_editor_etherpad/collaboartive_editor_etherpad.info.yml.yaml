@@ -1,0 +1,8 @@
+name: Collaborative Editor Etherpad
+description: Allows integration with Etherpad.
+package: Collaborative Editors
+dependencies:
+  - collaborative_editors
+
+type: module
+core: 8.x
