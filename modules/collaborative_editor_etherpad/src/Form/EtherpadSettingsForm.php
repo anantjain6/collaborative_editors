@@ -41,7 +41,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
     $form['etherpad_api_key'] = [  
       '#type' => 'textfield',  
       '#title' => $this->t('Etherpad API Key'),  
-      '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txtx on root directory of Etherpad.'),
+      '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
       '#default_value' => $config->get('etherpad_api_key'),  
     ];  
 
