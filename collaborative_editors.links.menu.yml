@@ -1,0 +1,13 @@
+collaborative_editors.admin_config:
+  title: 'Collaborative Editors Settings'
+  route_name: collaborative_editors.admin_config
+  parent: system.admin_config
+  description: 'Configure Collaborative Editors settings.'
+  weight: 10
+
+collaborative_editors.overview:
+  title: 'Collaborative Editors'
+  route_name: collaborative_editors.overview
+  parent: collaborative_editors.admin_config
+  description: 'Configure various Collaborative Editors plugins.'
+  weight: 0
