@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\collaborative_editor_etherpad\Controller;
+namespace Drupal\ce_etherpad\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 

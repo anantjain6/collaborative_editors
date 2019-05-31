@@ -1,9 +1,9 @@
 <?php  
 /**  
  * @file  
- * Contains Drupal\collaborative_editor_etherpad\Form\EtherpadSettingsForm.  
+ * Contains Drupal\ce_etherpad\Form\EtherpadSettingsForm.  
  */  
-namespace Drupal\collaborative_editor_etherpad\Form;  
+namespace Drupal\ce_etherpad\Form;  
 use Drupal\Core\Form\ConfigFormBase;  
 use Drupal\Core\Form\FormStateInterface;  
 
@@ -14,7 +14,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
    */  
   protected function getEditableConfigNames() {  
     return [  
-      'collaborative_editor_etherpad.settings',  
+      'ce_etherpad.settings',  
     ];  
   }  
 
@@ -22,14 +22,14 @@ class EtherpadSettingsForm extends ConfigFormBase {
    * {@inheritdoc}  
    */  
   public function getFormId() {  
-    return 'collaborative_editor_etherpad_settings';  
+    return 'ce_etherpad_settings';  
   } 
 
   /**  
    * {@inheritdoc}  
    */  
   public function buildForm(array $form, FormStateInterface $form_state) {  
-    $config = $this->config('collaborative_editor_etherpad.settings');  
+    $config = $this->config('ce_etherpad.settings');  
 
     $form['etherpad_api_url'] = [  
       '#type' => 'textfield',  
@@ -54,7 +54,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {  
     parent::submitForm($form, $form_state);  
 
-    $this->config('collaborative_editor_etherpad.settings')  
+    $this->config('ce_etherpad.settings')  
       ->set('etherpad_api_url', $form_state->getValue('etherpad_api_url'))  
       ->set('etherpad_api_key', $form_state->getValue('etherpad_api_key'))  
       ->save();  
