@@ -3,6 +3,7 @@
 namespace Drupal\collaborative_editors\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\Url;
 
 /**
  * Defines CollaborativeEditorsController class.
@@ -16,9 +17,33 @@ class CollaborativeEditorsController extends ControllerBase {
    *   Return markup array.
    */
   public function plugins() {
-    return [
-      '#type' => 'markup',
-      '#markup' => $this->t('Configuration will go here'),
+    $table['plugins'] = [
+      '#type' => 'table',
+      '#header' => array(t('Plugin'), t('Operations')),
+      '#empty' => t('There are no plugins enabled.'),
     ];
+    if(\Drupal::moduleHandler()->moduleExists('ce_etherpad'))
+    {
+      $table['plugins']['ce_etherpad'] = [
+        'title' => [
+          'data' => [
+            '#type' => 'markup',
+            '#prefix' => '<b>Etherpad</b>',
+          ],
+        ],
+        'operations' => [
+          'data' => [
+            '#type' => 'operations',
+            '#links' => [
+              'edit' => [
+                'title' => $this->t('Edit'),
+                'url' => URL::fromRoute('ce_etherpad.settings'),
+              ],
+            ],
+          ],
+        ],
+      ];
+    }
+    return $table;
   }
 }

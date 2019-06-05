@@ -1,13 +1,5 @@
-collaborative_editors.admin_config:
-  path: '/admin/config/collaborative-editors'
-  defaults:
-    _title: 'Collaborative Editors Settings'
-    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
-  requirements:
-    _permission: 'access administration pages'
-
 collaborative_editors.overview:
-  path: 'admin/config/collaborative-editors/overview'
+  path: 'admin/config/collaborative-editors'
   defaults:
     _title: 'Collaborative Editors'
     _controller: 'Drupal\collaborative_editors\Controller\CollaborativeEditorsController::plugins'

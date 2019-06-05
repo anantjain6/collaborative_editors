@@ -1,7 +1,7 @@
 <?php  
 /**  
  * @file  
- * Contains Drupal\ce_etherpad\Form\EtherpadSettingsForm.  
+ * Contains Drupal\collaborative_editor_etherpad\Form\EtherpadSettingsForm.  
  */  
 namespace Drupal\ce_etherpad\Form;  
 use Drupal\Core\Form\ConfigFormBase;  
@@ -14,7 +14,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
    */  
   protected function getEditableConfigNames() {  
     return [  
-      'ce_etherpad.settings',  
+      'collaborative_editor_etherpad.settings',  
     ];  
   }  
 
@@ -22,14 +22,14 @@ class EtherpadSettingsForm extends ConfigFormBase {
    * {@inheritdoc}  
    */  
   public function getFormId() {  
-    return 'ce_etherpad_settings';  
+    return 'collaborative_editor_etherpad_settings';  
   } 
 
   /**  
    * {@inheritdoc}  
    */  
   public function buildForm(array $form, FormStateInterface $form_state) {  
-    $config = $this->config('ce_etherpad.settings');  
+    $config = $this->config('collaborative_editor_etherpad.settings');  
 
     $form['etherpad_api_url'] = [  
       '#type' => 'textfield',  
@@ -41,7 +41,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
     $form['etherpad_api_key'] = [  
       '#type' => 'textfield',  
       '#title' => $this->t('Etherpad API Key'),  
-      '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
+      '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txtx on root directory of Etherpad.'),
       '#default_value' => $config->get('etherpad_api_key'),  
     ];  
 
@@ -54,7 +54,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {  
     parent::submitForm($form, $form_state);  
 
-    $this->config('ce_etherpad.settings')  
+    $this->config('collaborative_editor_etherpad.settings')  
       ->set('etherpad_api_url', $form_state->getValue('etherpad_api_url'))  
       ->set('etherpad_api_key', $form_state->getValue('etherpad_api_key'))  
       ->save();  

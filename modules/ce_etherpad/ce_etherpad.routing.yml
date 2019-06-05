@@ -1,5 +1,5 @@
 ce_etherpad.settings:  
-  path: '/admin/config/collaborative-editor/etherpad'  
+  path: '/admin/config/collaborative-editors/etherpad'  
   defaults:  
     _form: '\Drupal\ce_etherpad\Form\EtherpadSettingsForm'  
     _title: 'Collaborative Editor Etherpad Settings'  
