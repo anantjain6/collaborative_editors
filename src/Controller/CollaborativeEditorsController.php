@@ -19,11 +19,10 @@ class CollaborativeEditorsController extends ControllerBase {
   public function plugins() {
     $table['plugins'] = [
       '#type' => 'table',
-      '#header' => array(t('Plugin'), t('Operations')),
+      '#header' => [t('Plugin'), t('Operations')],
       '#empty' => t('There are no plugins enabled.'),
     ];
-    if(\Drupal::moduleHandler()->moduleExists('ce_etherpad'))
-    {
+    if (\Drupal::moduleHandler()->moduleExists('ce_etherpad')) {
       $table['plugins']['ce_etherpad'] = [
         'title' => [
           'data' => [
@@ -46,4 +45,5 @@ class CollaborativeEditorsController extends ControllerBase {
     }
     return $table;
   }
+
 }
