@@ -1,0 +1,4 @@
+services:
+  plugin.manager.real_time_editor:
+    class: Drupal\collaborative_editors\RealTimeEditorManager
+    arguments: ['@container.namespaces', '@cache.default', '@module_handler']

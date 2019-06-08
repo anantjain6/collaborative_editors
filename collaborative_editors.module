@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Contains collaborative_editors.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function collaborative_editors_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the collaborative_editors module.
+    case 'collaborative_editors.overview':
+      $template_path = drupal_get_path('module', "collaborative_editors") . "/src/templates/help.html.twig";
+      $template = file_get_contents($template_path);
+      $build = [
+        'description' => [
+          '#type' => 'inline_template',
+          '#template' => $template,
+        ],
+      ];
+      return $build;
+
+    default:
+  }
+}
