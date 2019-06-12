@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\ce_etherpad\Plugin\RealTimeEditor;
+namespace Drupal\ce_etherpad\Plugin\CollaborativeNetwork;
 
-use Drupal\collaborative_editors\RealTimeEditorInterface;
+use Drupal\collaborative_editors\CollaborativeNetworkInterface;
 
 /**
  * Provides an interface for Etherpad collaborative editor plugin.
  */
-interface EtherpadConnectInterface extends RealTimeEditorInterface {
+interface EtherpadConnectInterface extends CollaborativeNetworkInterface {
 
   /**
    * To test connection with Etherpad.

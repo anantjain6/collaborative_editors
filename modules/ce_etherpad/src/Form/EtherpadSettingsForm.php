@@ -32,11 +32,15 @@ class EtherpadSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $config = $this->config('ce_etherpad.settings');
 
+    $apiUrl = $config->get('etherpad_api_url');
+    if(!isset($apiUrl)  || trim($apiUrl) === '')
+      $apiUrl = 'http://localhost:9001';
+
     $form['etherpad_api_url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Etherpad API URL'),
       '#description' => $this->t('Enter Etherpad API URL. By default it is http://localhost:9001'),
-      '#default_value' => $config->get('etherpad_api_url'),
+      '#default_value' => $apiUrl,
     ];
 
     $form['etherpad_api_key'] = [

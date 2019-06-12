@@ -6,9 +6,9 @@ use Drupal\Component\Plugin\PluginInspectionInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
- * Defines an interface for Real time editor plugins.
+ * Defines an interface for Collaborative Network plugins.
  */
-interface RealTimeEditorInterface extends PluginInspectionInterface, ContainerFactoryPluginInterface {
+interface CollaborativeNetworkInterface extends PluginInspectionInterface, ContainerFactoryPluginInterface {
 
   /**
    * Set content of node.

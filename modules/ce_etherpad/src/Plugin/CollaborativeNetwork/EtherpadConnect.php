@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\ce_etherpad\Plugin\RealTimeEditor;
+namespace Drupal\ce_etherpad\Plugin\CollaborativeNetwork;
 
-use Drupal\ce_editors\RealTimeEditorBase;
+use Drupal\ce_editors\CollaborativeNetworkBase;
 use EtherpadLite\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -10,21 +10,48 @@ use GuzzleHttp\Exception\ConnectException;
 /**
  * Contains Plugin ID and Plugin definition info for ce_etherpad.
  *
- * @RealTimeEditor(
+ * @CollaborativeNetwork(
  *  id = "ce_etherpad",
  *  label = @Translation("Etherpad"),
  *  description = @Translation("Plugin provided by ce_etherpad."),
  * )
  */
-class EtherpadConnect extends RealTimeEditorBase implements EtherpadConnectInterface {
+class EtherpadConnect extends CollaborativeNetworkBase implements EtherpadConnectInterface {
+
+  /**
+   * The API URL of Etherpad.
+   *
+   * @var string
+   */
+  protected $apiUrl;
+
+  /**
+   * The API Key of Etherpad.
+   *
+   * @var string
+   */
+  protected $apiKey;
+
+  /**
+   * Set Credentials.
+   *
+   * @param string $apiUrl
+   *   The API URL of Etherpad.
+   * @param string $apiKey
+   *   The API Key of Etherpad.
+   */
+  public function setCredentials($apiUrl = 'http://localhost:9001', $apiKey) {
+    $this->apiUrl = $apiUrl;
+    $this->apiKey = $apiKey;
+  }
 
   /**
    * {@inheritdoc}
    */
-  public function testConnection($apiUrl, $apiKey)
+  public function testConnection()
   {
     try {
-      $client = new Client($apiKey, $apiUrl);
+      $client = new Client($this->apiKey, $this->apiUrl);
       $response = $client->checkToken();
       if ($response->getMessage() == "ok") {
         drupal_set_message("Connection established successfully.");
