@@ -3,6 +3,7 @@ description: Allows integration with Etherpad.
 package: Collaborative Editors
 dependencies:
   - collaborative_editors
+  - drupal:editor
 
 type: module
 core: 8.x
