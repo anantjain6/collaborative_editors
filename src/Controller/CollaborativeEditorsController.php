@@ -4,7 +4,7 @@ namespace Drupal\collaborative_editors\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\collaborative_editors\RealTimeEditorManager;
+use Drupal\collaborative_editors\CollaborativeNetworkManager;
 use Drupal\Core\Url;
 
 /**
@@ -13,27 +13,27 @@ use Drupal\Core\Url;
 class CollaborativeEditorsController extends ControllerBase {
 
   /**
-   * The real time editor manager.
+   * The Collaborative Network manager.
    *
-   * @var \Drupal\collaborative_editors\RealTimeEditorManager
+   * @var \Drupal\collaborative_editors\CollaborativeNetworkManager
    */
-  private $realTimeEitorManager;
+  private $collaborativeNetworkManager;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
-    return new static($container->get('plugin.manager.real_time_editor'));
+    return new static($container->get('plugin.manager.collaborative_network'));
   }
 
   /**
    * CollaborativeEditorsController constructor.
    *
-   * @param \Drupal\collaborative_editors\RealTimeEditorManager $realTimeEitorManager
-   *   The real time editor manager.
+   * @param \Drupal\collaborative_editors\CollaborativeNetworkManager $collaborativeNetworkManager
+   *   The Collaborative Network manager.
    */
-  public function __construct(RealTimeEditorManager $realTimeEitorManager) {
-    $this->realTimeEitorManager = $realTimeEitorManager;
+  public function __construct(CollaborativeNetworkManager $collaborativeNetworkManager) {
+    $this->collaborativeNetworkManager = $collaborativeNetworkManager;
   }
 
   /**
@@ -43,7 +43,7 @@ class CollaborativeEditorsController extends ControllerBase {
    *   Return markup array.
    */
   public function plugins() {
-    $editors = $this->realTimeEitorManager->getDefinitions();
+    $editors = $this->collaborativeNetworkManager->getDefinitions();
 
     $status = FALSE;
 
@@ -80,7 +80,7 @@ class CollaborativeEditorsController extends ControllerBase {
   /**
    * Builds a row for a plugin in the plugins listing.
    *
-   * @param \Drupal\collaborative_editors\RealTimeEditorManager $editor
+   * @param \Drupal\collaborative_editors\CollaborativeNetworkManager $editor
    *   The plugin definition
    */
   public function buildRow($editor)

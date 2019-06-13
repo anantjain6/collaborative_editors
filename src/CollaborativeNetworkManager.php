@@ -2,17 +2,19 @@
 
 namespace Drupal\collaborative_editors;
 
+use Drupal\collaborative_editors\Annotation\CollaborativeNetwork;
+use Drupal\collaborative_editors\CollaborativeNetworkInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;
 
 /**
- * Provides the Real time editor plugin manager.
+ * Provides the Collaborative Network plugin manager.
  */
-class RealTimeEditorManager extends DefaultPluginManager {
+class CollaborativeNetworkManager extends DefaultPluginManager {
 
   /**
-   * Constructs a new RealTimeEditorManager object.
+   * Constructs a new CollaborativeNetworkManager object.
    *
    * @param \Traversable $namespaces
    *   An object that implements \Traversable which contains the root paths
@@ -23,10 +25,10 @@ class RealTimeEditorManager extends DefaultPluginManager {
    *   The module handler to invoke the alter hook with.
    */
   public function __construct(\Traversable $namespaces, CacheBackendInterface $cache_backend, ModuleHandlerInterface $module_handler) {
-    parent::__construct('Plugin/RealTimeEditor', $namespaces, $module_handler, 'Drupal\collaborative_editors\RealTimeEditorInterface', 'Drupal\collaborative_editors\Annotation\RealTimeEditor');
+    parent::__construct('Plugin/CollaborativeNetwork', $namespaces, $module_handler, CollaborativeNetworkInterface::class, CollaborativeNetwork::class);
 
-    $this->alterInfo('collaborative_editors_real_time_editor_info');
-    $this->setCacheBackend($cache_backend, 'collaborative_editors_real_time_editor_plugins');
+    $this->alterInfo('collaborative_editors_collaborative_network_info');
+    $this->setCacheBackend($cache_backend, 'collaborative_editors_collaborative_network_plugins');
   }
 
 }

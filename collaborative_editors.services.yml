@@ -1,4 +1,4 @@
 services:
-  plugin.manager.real_time_editor:
-    class: Drupal\collaborative_editors\RealTimeEditorManager
+  plugin.manager.collaborative_network:
+    class: Drupal\collaborative_editors\CollaborativeNetworkManager
     arguments: ['@container.namespaces', '@cache.default', '@module_handler']

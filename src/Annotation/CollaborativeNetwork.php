@@ -5,14 +5,14 @@ namespace Drupal\collaborative_editors\Annotation;
 use Drupal\Component\Annotation\Plugin;
 
 /**
- * Defines a Real time editor item annotation object.
+ * Defines a Collaborative Network item annotation object.
  *
- * @see \Drupal\collaborative_editors\Plugin\RealTimeEditorManager
+ * @see \Drupal\collaborative_editors\Plugin\CollaborativeNetworkManager
  * @see plugin_api
  *
  * @Annotation
  */
-class RealTimeEditor extends Plugin {
+class CollaborativeNetwork extends Plugin {
 
 
   /**
