@@ -2,6 +2,7 @@
 
 namespace Drupal\ce_etherpad\Form;
 
+use Drupal\ce_etherpad\Plugin\CollaborativeNetwork\EtherpadEditor;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
@@ -49,6 +50,11 @@ class EtherpadSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
       '#default_value' => $config->get('etherpad_api_key'),
     ];
+    $form['test_connection'] = array(
+      '#type' => 'submit',
+      '#value' => t('Test connection'),
+      '#submit' => array('::testConnection'),
+    );
 
     return parent::buildForm($form, $form_state);
   }
@@ -65,4 +71,11 @@ class EtherpadSettingsForm extends ConfigFormBase {
       ->save();
   }
 
+   /**  
+   * {@inheritdoc}  
+   */  
+  public function testConnection(array &$form, FormStateInterface $form_state) { 
+    $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_url'), $form_state->getValue('etherpad_api_key'));
+    $etherpad->testConnection();
+  }
 }
