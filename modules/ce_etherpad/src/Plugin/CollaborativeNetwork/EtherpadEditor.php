@@ -16,7 +16,7 @@ use GuzzleHttp\Exception\ConnectException;
  *  description = @Translation("Plugin provided by ce_etherpad."),
  * )
  */
-class EtherpadConnect extends CollaborativeNetworkBase implements EtherpadConnectInterface {
+class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorInterface {
 
   /**
    * The API URL of Etherpad.
