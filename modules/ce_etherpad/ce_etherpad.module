@@ -1,39 +1,15 @@
 <?php
 
 /**
- * Implements hook_requirements().
+ * Implements hook_library_info_build()
+ *
+ * Add Etherpad jQuery Plugin library to drupal library.
  */
-function ce_etherpad_requirements($phase) {
-  $requirements = array();
-
-  if ($phase == 'runtime') {
-    // Check for the client library.
-    $requirements['etherpad_client'] = array(
-      'title' => t('Etherpad client library'),
-    );
-    if (class_exists('EtherpadLite\Client')) {
-      $requirements['etherpad_client']['value'] = t('Installed');
-      $requirements['etherpad_client']['severity'] = REQUIREMENT_OK;
-    }
-    else {
-      $requirements['etherpad_client']['value'] = t('Not installed');
-      $requirements['etherpad_client']['description'] = t('Either Http Client library is not installed. Run "composer require 0x46616c6b/etherpad-lite-client" in root directory of Drupal to install Etherpad Http Client libreary.');
-      $requirements['etherpad_client']['severity'] = REQUIREMENT_ERROR;
-    }
-
-    // Check for the jquery plugin.
-    $requirements['etherpad_plugin'] = array(
-      'title' => t('Etherpad client jQuery plugin'),
-    );
-    if (file_exists(DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js')) {
-      $requirements['etherpad_plugin']['value'] = DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js';
-      $requirements['etherpad_plugin']['severity'] = REQUIREMENT_OK;
-    }
-    else {
-      $requirements['etherpad_plugin']['value'] = t('Not installed');
-      $requirements['etherpad_plugin']['description'] = t('Download <a href="@url">etherpad jquery plugin</a>', array('@url' => 'https://github.com/ether/etherpad-lite-jquery-plugin'));
-      $requirements['etherpad_plugin']['severity'] = REQUIREMENT_ERROR;
-    }
-  }
-  return $requirements;
+function ce_etherpad_library_info_build() {
+  $library['ce_etherpad.jquery_plugin'] = [
+    'js' => [
+      '/libraries/ce_etherpad/js/etherpad.js' => [],
+    ],
+  ];
+  return $library;
 }
