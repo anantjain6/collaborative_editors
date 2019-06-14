@@ -1,0 +1,9 @@
+ce_etherpad.settings:  
+  path: '/admin/config/collaborative-editors/etherpad'  
+  defaults:  
+    _form: '\Drupal\ce_etherpad\Form\EtherpadSettingsForm'  
+    _title: 'Collaborative Editor Etherpad Settings'  
+  requirements:  
+    _permission: 'access administration pages'  
+  options:  
+    _admin_route: TRUE 

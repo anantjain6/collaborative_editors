@@ -1,0 +1,9 @@
+collaborative_editors.overview:
+  path: 'admin/config/collaborative-editors'
+  defaults:
+    _title: 'Collaborative Editors'
+    _controller: 'Drupal\collaborative_editors\Controller\CollaborativeEditorsController::plugins'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
