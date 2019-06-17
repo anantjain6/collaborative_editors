@@ -90,6 +90,7 @@ class CollaborativeEditorsController extends ControllerBase {
         'data' => [
           '#type' => 'markup',
           '#prefix' => '<b>' . $editor['label'] . '</b>',
+          '#suffix' => '<div>' . $editor['description'] . '</div>',
         ],
       ],
       'operations' => [
