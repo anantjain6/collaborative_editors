@@ -61,7 +61,7 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
       }
     }
     catch (ConnectException $e) {
-      drupal_set_message("Unable to connect, API URL or the API URL is incorrect.", "error");
+      drupal_set_message("Unable to connect API URL or the API URL is incorrect.", "error");
     }
     catch (ClientException $e) {
       drupal_set_message("Either or both API URL and API Key is incorrect", "error");
