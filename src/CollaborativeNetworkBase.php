@@ -18,4 +18,13 @@ abstract class CollaborativeNetworkBase extends PluginBase implements Collaborat
     $node->body->value = $content;
     $node->save();
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function get(int $node_id) {
+    $node = Node::load($node_id);
+    return $node->body->value;
+  }
+
 }

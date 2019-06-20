@@ -33,25 +33,32 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
   protected $apiKey;
 
   /**
+   * The instance of Etherpad HTTP Client.
+   *
+   * @var iterable
+   */
+  protected $client;
+
+  /**
    * Set Credentials.
    *
-   * @param string $apiUrl
-   *   The API URL of Etherpad.
    * @param string $apiKey
    *   The API Key of Etherpad.
+   * @param string $apiUrl
+   *   The API URL of Etherpad.
    */
-  public function __construct($apiUrl = 'http://localhost:9001', $apiKey) {
-    $this->apiUrl = $apiUrl;
+  public function __construct($apiKey, $apiUrl = 'http://localhost:9001') {
     $this->apiKey = $apiKey;
+    $this->apiUrl = $apiUrl;
+    $this->client = new Client($this->apiKey, $this->apiUrl);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function testConnection()
-  {
+  public function testConnection() {
     try {
-      $client = new Client($this->apiKey, $this->apiUrl);
+      $client = $this->client;
       $response = $client->checkToken();
       if ($response->getMessage() == "ok") {
         drupal_set_message("Connection established successfully.");
@@ -70,4 +77,102 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
       drupal_set_message("Either Http Client library is not installed. Run \"composer require 0x46616c6b/etherpad-lite-client\" in root directory of Drupal to install Etherpad Http Client libreary.", "error");
     }
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createGroup($groupMapper = NULL) {
+    $client = $this->client;
+
+    // Create Group of pads in Etherpad.
+    $groupID = '';
+    if (isset($groupMapper)) {
+      $groupID = $client->createGroupIfNotExistsFor($groupMapper)->getData('groupID');
+    }
+    else {
+      $groupID = $client->createGroup()->getData('groupID');
+    }
+
+    return $groupID;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createAuthor($authorMapper, $authorName = 'anonymous') {
+    $client = $this->client;
+
+    // Create Author if not exists in Etherpad.
+    $authorID = $client->createAuthorIfNotExistsFor($authorMapper, $authorName)->getData('authorID');
+
+    return $authorID;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createSession($groupID, $authorID, $sessionTime = 0) {
+    $client = $this->client;
+
+    if ($sessionTime == 0) {
+      $sessionTime = time() + 24 * 60 * 60;
+    }
+
+    // In Etherpad create session between Group of pads and Author.
+    $sessionID = $client->createSession($groupID, $authorID, $sessionTime)->getData('sessionID');
+
+    $host = parse_url($this->apiUrl, PHP_URL_HOST);
+
+    // Set a cookie to allow access.
+    setcookie('sessionID', $sessionID, $sessionTime, '/', $host);
+
+    return $sessionID;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setContent($padID, $content) {
+    $client = $this->client;
+    $client->setHTML($padID, '<html><head></head><body>' . $content . '</body></html>');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getContent($padID) {
+    $client = $this->client;
+    return $client->getHTML($padID)->getData('html');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createPad($authorMapper, $authorName = 'anonymous', $content = NULL, $groupMapper = NULL, $sessionTime = 0) {
+    $client = $this->client;
+
+    $groupID = $this->createGroup($groupMapper);
+    $authorID = $this->createAuthor($authorMapper, $authorName);
+    $sessionID = $this->createSession($groupID, $authorID, $sessionTime);
+    $padID = '';
+
+    // List all the Pad in Group.
+    $pad = $client->listPads($groupID)->getData('padIDs');
+    if (count($pad) > 0) {
+      $padID = $pad[0];
+    }
+    else {
+      // Create Pad in Group.
+      $client->createGroupPad($groupID, 'node');
+
+      $padID = $groupID . '$node';
+    }
+
+    if (isset($content)) {
+      $this->setContent($padID, $content);
+    }
+
+    return $padID;
+  }
+
 }

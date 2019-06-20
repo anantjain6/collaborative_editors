@@ -34,8 +34,9 @@ class EtherpadSettingsForm extends ConfigFormBase {
     $config = $this->config('ce_etherpad.settings');
 
     $apiUrl = $config->get('etherpad_api_url');
-    if(!isset($apiUrl)  || trim($apiUrl) === '')
+    if (!isset($apiUrl)  || trim($apiUrl) === '') {
       $apiUrl = 'http://localhost:9001';
+    }
 
     $form['etherpad_api_url'] = [
       '#type' => 'textfield',
@@ -50,11 +51,11 @@ class EtherpadSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
       '#default_value' => $config->get('etherpad_api_key'),
     ];
-    $form['test_connection'] = array(
+    $form['test_connection'] = [
       '#type' => 'submit',
       '#value' => t('Test connection'),
-      '#submit' => array('::testConnection'),
-    );
+      '#submit' => ['::testConnection'],
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -71,11 +72,12 @@ class EtherpadSettingsForm extends ConfigFormBase {
       ->save();
   }
 
-   /**  
-   * {@inheritdoc}  
-   */  
-  public function testConnection(array &$form, FormStateInterface $form_state) { 
+  /**
+   * {@inheritdoc}
+   */
+  public function testConnection(array &$form, FormStateInterface $form_state) {
     $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_url'), $form_state->getValue('etherpad_api_key'));
     $etherpad->testConnection();
   }
+
 }

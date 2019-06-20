@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Function to check Etherpad's requirements.
+ */
+
+/**
  * Implements hook_requirements().
  */
 function ce_etherpad_requirements($phase) {
@@ -31,7 +36,7 @@ function ce_etherpad_requirements($phase) {
     }
     else {
       $requirements['etherpad_plugin']['value'] = t('Not installed');
-      $requirements['etherpad_plugin']['description'] = t('Download <a href="@url">Etherpad jQuery Plugin</a>, extract in DRUPAL_ROOT/libraries directory and rename the folder "etherpad-lite-jquery-plugin-master" to "ce_etherpad".', array('@url' => 'https://github.com/ether/etherpad-lite-jquery-plugin/archive/master.zip'));
+      $requirements['etherpad_plugin']['description'] = t('Download <a href="@url">Etherpad jQuery Plugin</a>, extract in DRUPAL_ROOT/libraries directory and rename the folder "etherpad-lite-jquery-plugin-master" to "ce_etherpad".', ['@url' => 'https://github.com/ether/etherpad-lite-jquery-plugin/archive/master.zip']);
       $requirements['etherpad_plugin']['severity'] = REQUIREMENT_ERROR;
     }
   }

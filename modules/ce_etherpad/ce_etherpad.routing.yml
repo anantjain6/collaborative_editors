@@ -7,3 +7,19 @@ ce_etherpad.settings:
     _permission: 'access administration pages'  
   options:  
     _admin_route: TRUE 
+
+ce_etherpad.get_pad:
+  path: '/etherpad/get_pad'
+  defaults:
+    _controller: '\Drupal\ce_etherpad\Controller\EtherpadController::getPad'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+ce_etherpad.get_content:
+  path: '/etherpad/get_content'
+  defaults:
+    _controller: '\Drupal\ce_etherpad\Controller\EtherpadController::getContent'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'

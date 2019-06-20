@@ -2,6 +2,7 @@ ce_etherpad:
   version: VERSION
   js:
     js/editor.js: {}
+    /libraries/ce_etherpad/js/etherpad.js: {}
   css:
     component:
       styles/editor.css: {}
