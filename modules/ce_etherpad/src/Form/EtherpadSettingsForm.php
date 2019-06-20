@@ -76,7 +76,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function testConnection(array &$form, FormStateInterface $form_state) {
-    $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_url'), $form_state->getValue('etherpad_api_key'));
+    $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_key'), $form_state->getValue('etherpad_api_url'));
     $etherpad->testConnection();
   }
 
