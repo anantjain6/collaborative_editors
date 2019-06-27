@@ -34,7 +34,13 @@ class EtherpadSettingsForm extends ConfigFormBase {
     $config = $this->config('ce_etherpad.settings');
 
     $apiUrl = $config->get('etherpad_api_url');
-    if (!isset($apiUrl)  || trim($apiUrl) === '') {
+    $apiKey = $config->get('etherpad_api_key');
+    if(isset($_SESSION["etherpad_api_url"])) {
+      $apiUrl = $_SESSION["etherpad_api_url"];
+      $apiKey = $_SESSION["etherpad_api_key"];
+      unset($_SESSION["etherpad_api_url"]);
+      unset($_SESSION["etherpad_api_key"]);
+    } else if(!isset($apiUrl)  || trim($apiUrl) === '') {
       $apiUrl = 'http://localhost:9001';
     }
 
@@ -43,17 +49,23 @@ class EtherpadSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Etherpad API URL'),
       '#description' => $this->t('Enter Etherpad API URL. By default it is http://localhost:9001'),
       '#default_value' => $apiUrl,
+      '#required' => TRUE,
+      '#type' => 'url',
     ];
 
     $form['etherpad_api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Etherpad API Key'),
       '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
-      '#default_value' => $config->get('etherpad_api_key'),
+      '#default_value' => $apiKey,
+      '#required' => TRUE,
     ];
-    $form['test_connection'] = [
+    $form['actions'] = [
+      '#type' => 'actions',
+    ];
+    $form['actions']['test_connection'] = [
       '#type' => 'submit',
-      '#value' => t('Test connection'),
+      '#value' => $this->t('Test connection'),
       '#submit' => ['::testConnection'],
     ];
 
@@ -78,6 +90,8 @@ class EtherpadSettingsForm extends ConfigFormBase {
   public function testConnection(array &$form, FormStateInterface $form_state) {
     $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_key'), $form_state->getValue('etherpad_api_url'));
     $etherpad->testConnection();
+    $_SESSION['etherpad_api_url'] = $form_state->getValue('etherpad_api_url');
+    $_SESSION['etherpad_api_key'] = $form_state->getValue('etherpad_api_key');
   }
 
 }
