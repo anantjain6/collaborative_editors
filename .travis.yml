@@ -1,0 +1,16 @@
+os:
+  - linux
+
+language: php
+
+php:
+  - '7.1'
+  
+before_script:
+  - composer self-update
+  - composer global require drupal/coder
+  - composer global require dealerdirect/phpcodesniffer-composer-installer
+  - phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
+  - phpenv rehash
+script:
+  - phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md *
