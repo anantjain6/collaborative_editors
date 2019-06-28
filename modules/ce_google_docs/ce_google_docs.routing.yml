@@ -15,3 +15,19 @@ ce_google_docs.add_node:
   methods:  [GET]
   requirements:
     _access: 'TRUE'
+
+ce_google_docs.list_users:
+  path: '/google_docs/list_users'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::listUser'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+ce_google_docs.test_connection:
+  path: '/google_docs/test_connection'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::testConnection'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
