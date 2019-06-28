@@ -8,10 +8,10 @@ php:
   
 before_script:
   - composer self-update
-  - composer global require drupal/coder
-  - composer global require dealerdirect/phpcodesniffer-composer-installer
+  - composer require dealerdirect/phpcodesniffer-composer-installer
+  - composer require drupal/coder
   - composer require "squizlabs/php_codesniffer=*"
-  - php vendor/bin/phpcs --config-set installed_paths ~/.composer/vendor/drupal/coder/coder_sniffer
+  - php vendor/bin/phpcs --config-set installed_paths vendor/bin/drupal/coder/coder_sniffer
   - phpenv rehash
 script:
   - php vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md *
