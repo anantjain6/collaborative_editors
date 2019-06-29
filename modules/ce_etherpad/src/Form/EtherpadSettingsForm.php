@@ -35,12 +35,13 @@ class EtherpadSettingsForm extends ConfigFormBase {
 
     $apiUrl = $config->get('etherpad_api_url');
     $apiKey = $config->get('etherpad_api_key');
-    if(isset($_SESSION["etherpad_api_url"])) {
+    if (isset($_SESSION["etherpad_api_url"])) {
       $apiUrl = $_SESSION["etherpad_api_url"];
       $apiKey = $_SESSION["etherpad_api_key"];
       unset($_SESSION["etherpad_api_url"]);
       unset($_SESSION["etherpad_api_key"]);
-    } else if(!isset($apiUrl)  || trim($apiUrl) === '') {
+    }
+    elseif (!isset($apiUrl)  || trim($apiUrl) === '') {
       $apiUrl = 'http://localhost:9001';
     }
 

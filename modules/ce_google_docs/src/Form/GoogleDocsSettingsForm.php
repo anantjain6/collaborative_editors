@@ -33,7 +33,7 @@ class GoogleDocsSettingsForm extends ConfigFormBase {
     $config = $this->config('ce_google_docs.settings');
 
     $apiKey = $config->get('api_key');
-    if(isset($_SESSION["api_key"])) {
+    if (isset($_SESSION["api_key"])) {
       $apiKey = $_SESSION["api_key"];
       unset($_SESSION["api_key"]);
     }
@@ -71,7 +71,7 @@ class GoogleDocsSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function generateKey(array &$form, FormStateInterface $form_state) {
-    $_SESSION['api_key'] =hash("sha256", rand());
+    $_SESSION['api_key'] = hash("sha256", rand());
   }
 
 }
