@@ -35,7 +35,7 @@ class EtherpadPluginTest extends BrowserTestBase {
    */
   public static $modules = [
     'collaborative_editors',
-    'ce_etherpad'
+    'ce_etherpad',
   ];
 
   /**
@@ -45,7 +45,7 @@ class EtherpadPluginTest extends BrowserTestBase {
     parent::setUp();
 
     $this->adminUser = $this->drupalCreateUser($this->adminUserPermissions);
-    // For admin
+    // For admin.
     $this->drupalLogin($this->adminUser);
   }
 
@@ -57,4 +57,5 @@ class EtherpadPluginTest extends BrowserTestBase {
     $this->assertResponse(200);
     $this->assertSession()->pageTextContains('Plugin provided by ce_etherpad.');
   }
+
 }

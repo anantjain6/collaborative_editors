@@ -47,7 +47,6 @@ class CollaborativeEditorsController extends ControllerBase {
 
     $status = FALSE;
 
-
     $data = [];
     foreach ($editors as $editor) {
       $data[$editor['id']] = $this->buildRow($editor);
@@ -66,10 +65,8 @@ class CollaborativeEditorsController extends ControllerBase {
    *
    * @return array
    *   A render array structure of header strings.
-   *
    */
-  public function buildHeader()
-  {
+  public function buildHeader() {
     $header = [
       $this->t('Module'),
       $this->t('Operations'),
@@ -80,11 +77,10 @@ class CollaborativeEditorsController extends ControllerBase {
   /**
    * Builds a row for a plugin in the plugins listing.
    *
-   * @param \Drupal\collaborative_editors\CollaborativeNetworkManager $editor
-   *   The plugin definition
+   * @param array $editor
+   *   Array of Editor plugin definition.
    */
-  public function buildRow($editor)
-  {
+  public function buildRow(array $editor) {
     $row = [
       'title' => [
         'data' => [

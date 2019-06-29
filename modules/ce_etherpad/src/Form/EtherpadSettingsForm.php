@@ -35,12 +35,13 @@ class EtherpadSettingsForm extends ConfigFormBase {
 
     $apiUrl = $config->get('etherpad_api_url');
     $apiKey = $config->get('etherpad_api_key');
-    if(isset($_SESSION["etherpad_api_url"])) {
+    if (isset($_SESSION["etherpad_api_url"])) {
       $apiUrl = $_SESSION["etherpad_api_url"];
       $apiKey = $_SESSION["etherpad_api_key"];
       unset($_SESSION["etherpad_api_url"]);
       unset($_SESSION["etherpad_api_key"]);
-    } else if(!isset($apiUrl)  || trim($apiUrl) === '') {
+    }
+    elseif (!isset($apiUrl)  || trim($apiUrl) === '') {
       $apiUrl = 'http://localhost:9001';
     }
 
@@ -80,20 +81,23 @@ class EtherpadSettingsForm extends ConfigFormBase {
       ->set('etherpad_api_key', $form_state->getValue('etherpad_api_key'))
       ->save();
 
-    if (!file_exists(DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js'))
+    if (!file_exists(DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js')) {
       drupal_set_message(t('Download <a href="@url">Etherpad jQuery Plugin</a>, extract in @drupal_root/libraries directory and rename the folder "etherpad-lite-jquery-plugin-master" to "ce_etherpad".', ['@url' => 'https://github.com/ether/etherpad-lite-jquery-plugin/archive/master.zip', '@drupal_root' => DRUPAL_ROOT]), 'warning');
+    }
   }
 
-   /**  
-   * {@inheritdoc}  
-   */  
-  public function testConnection(array &$form, FormStateInterface $form_state) { 
-    $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_url'), $form_state->getValue('etherpad_api_key'));
+  /**
+   * {@inheritdoc}
+   */
+  public function testConnection(array &$form, FormStateInterface $form_state) {
+    $etherpad = new EtherpadEditor($form_state->getValue('etherpad_api_key'), $form_state->getValue('etherpad_api_url'));
     $etherpad->testConnection();
     $_SESSION['etherpad_api_url'] = $form_state->getValue('etherpad_api_url');
     $_SESSION['etherpad_api_key'] = $form_state->getValue('etherpad_api_key');
 
-    if (!file_exists(DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js'))
+    if (!file_exists(DRUPAL_ROOT . '/libraries/ce_etherpad/js/etherpad.js')) {
       drupal_set_message(t('Download <a href="@url">Etherpad jQuery Plugin</a>, extract in @drupal_root/libraries directory and rename the folder "etherpad-lite-jquery-plugin-master" to "ce_etherpad".', ['@url' => 'https://github.com/ether/etherpad-lite-jquery-plugin/archive/master.zip', '@drupal_root' => DRUPAL_ROOT]), 'warning');
+    }
   }
+
 }

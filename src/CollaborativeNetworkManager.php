@@ -3,7 +3,6 @@
 namespace Drupal\collaborative_editors;
 
 use Drupal\collaborative_editors\Annotation\CollaborativeNetwork;
-use Drupal\collaborative_editors\CollaborativeNetworkInterface;
 use Drupal\Core\Plugin\DefaultPluginManager;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Extension\ModuleHandlerInterface;

@@ -56,14 +56,15 @@ class RoutesTest extends BrowserTestBase {
    * Test that the availability of collaborative_editors.overview route.
    */
   public function testOverviewRoutes() {
-    // For admin
+    // For admin.
     $this->drupalLogin($this->adminUser);
     $this->drupalGet(URL::fromRoute('collaborative_editors.overview'));
     $this->assertResponse(200);
 
-    // For user without admin permissions
+    // For user without admin permissions.
     $this->drupalLogin($this->unauthorizedUser);
     $this->drupalGet(URL::fromRoute('collaborative_editors.overview'));
     $this->assertResponse(403);
   }
+
 }

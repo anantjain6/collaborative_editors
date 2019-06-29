@@ -2,7 +2,6 @@
 
 namespace Drupal\ce_etherpad\Plugin\Editor;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Plugin\EditorBase;
 use Drupal\editor\Entity\Editor;
 
@@ -21,17 +20,19 @@ use Drupal\editor\Entity\Editor;
  * )
  */
 class EtherpadEditor extends EditorBase {
+
   /**
    * {@inheritdoc}
    */
-  public function getJSSettings (Editor $editor) {
-  	return [];
+  public function getJSSettings(Editor $editor) {
+    return [];
   }
 
   /**
    * {@inheritdoc}
    */
   public function getLibraries(Editor $editor) {
-  	return [];	
+    return [];
   }
+
 }

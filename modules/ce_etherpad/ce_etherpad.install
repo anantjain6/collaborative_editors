@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Function to check Etherpad's requirements.
+ */
+
+/**
  * Implements hook_requirements().
  */
 function ce_etherpad_requirements($phase) {
