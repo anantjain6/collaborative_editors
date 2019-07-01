@@ -35,12 +35,12 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
   /**
    * Set Credentials.
    *
-   * @param string $apiUrl
-   *   The API URL of Etherpad.
    * @param string $apiKey
    *   The API Key of Etherpad.
+   * @param string $apiUrl
+   *   The API URL of Etherpad.
    */
-  public function setCredentials($apiUrl = 'http://localhost:9001', $apiKey) {
+  public function setCredentials($apiKey, $apiUrl = 'http://localhost:9001') {
     $this->apiUrl = $apiUrl;
     $this->apiKey = $apiKey;
   }
@@ -48,8 +48,7 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
   /**
    * {@inheritdoc}
    */
-  public function testConnection()
-  {
+  public function testConnection() {
     try {
       $client = new Client($this->apiKey, $this->apiUrl);
       $response = $client->checkToken();
@@ -70,4 +69,5 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
       drupal_set_message("Either Http Client library is not installed. Run \"composer require 0x46616c6b/etherpad-lite-client\" in root directory of Drupal to install Etherpad Http Client libreary.", "error");
     }
   }
+
 }

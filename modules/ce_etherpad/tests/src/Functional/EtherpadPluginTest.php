@@ -1,7 +1,10 @@
 <?php
+
 namespace Drupal\Tests\collaborative_editors\Functional;
+
 use Drupal\Tests\BrowserTestBase;
 use Drupal\Core\Url;
+
 /**
  * Check if our defined routes are working correctly or not.
  *
@@ -29,17 +32,19 @@ class EtherpadPluginTest extends BrowserTestBase {
    */
   public static $modules = [
     'collaborative_editors',
-    'ce_etherpad'
+    'ce_etherpad',
   ];
+
   /**
    * {@inheritdoc}
    */
   public function setUp() {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser($this->adminUserPermissions);
-    // For admin
+    // For admin.
     $this->drupalLogin($this->adminUser);
   }
+
   /**
    * Test the availability of ce_etherpad on overview page.
    */
@@ -48,4 +53,5 @@ class EtherpadPluginTest extends BrowserTestBase {
     $this->assertResponse(200);
     $this->assertSession()->pageTextContains('Plugin provided by ce_etherpad.');
   }
+
 }

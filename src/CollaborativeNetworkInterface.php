@@ -13,10 +13,11 @@ interface CollaborativeNetworkInterface extends PluginInspectionInterface, Conta
   /**
    * Set content of node.
    *
-   * @param  int $node_id
-   *   ID of Node
+   * @param int $node_id
+   *   ID of Node.
    * @param string $content
-   *   Content to be set as body of node
+   *   Content to be set as body of node.
    */
   public function set(int $node_id, string $content);
+
 }

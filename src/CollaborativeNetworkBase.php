@@ -18,4 +18,5 @@ abstract class CollaborativeNetworkBase extends PluginBase implements Collaborat
     $node->body->value = $content;
     $node->save();
   }
+
 }
