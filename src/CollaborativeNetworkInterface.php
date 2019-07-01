@@ -3,12 +3,11 @@
 namespace Drupal\collaborative_editors;
 
 use Drupal\Component\Plugin\PluginInspectionInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 
 /**
  * Defines an interface for Collaborative Network plugins.
  */
-interface CollaborativeNetworkInterface extends PluginInspectionInterface, ContainerFactoryPluginInterface {
+interface CollaborativeNetworkInterface extends PluginInspectionInterface {
 
   /**
    * Set content of node.

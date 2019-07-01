@@ -13,12 +13,14 @@ use Drupal\Core\Url;
  * @preserveGlobalState disabled
  */
 class EtherpadPluginTest extends BrowserTestBase {
+
   /**
    * An admin user used for this test.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $adminUser;
+
   /**
    * The permissions of the admin user.
    *
@@ -27,6 +29,7 @@ class EtherpadPluginTest extends BrowserTestBase {
   protected $adminUserPermissions = [
     'access administration pages',
   ];
+
   /**
    * {@inheritdoc}
    */
@@ -40,6 +43,7 @@ class EtherpadPluginTest extends BrowserTestBase {
    */
   public function setUp() {
     parent::setUp();
+
     $this->adminUser = $this->drupalCreateUser($this->adminUserPermissions);
     // For admin.
     $this->drupalLogin($this->adminUser);

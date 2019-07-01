@@ -2,7 +2,7 @@
 
 namespace Drupal\ce_etherpad\Plugin\CollaborativeNetwork;
 
-use Drupal\ce_editors\CollaborativeNetworkBase;
+use Drupal\collaborative_editors\CollaborativeNetworkBase;
 use EtherpadLite\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
@@ -40,7 +40,7 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
    * @param string $apiUrl
    *   The API URL of Etherpad.
    */
-  public function setCredentials($apiKey, $apiUrl = 'http://localhost:9001') {
+  public function __construct($apiKey, $apiUrl = 'http://localhost:9001') {
     $this->apiUrl = $apiUrl;
     $this->apiKey = $apiKey;
   }
@@ -50,7 +50,7 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
    */
   public function testConnection() {
     try {
-      $client = new Client($this->apiKey, $this->apiUrl);
+      $client = new Client($this->apiUrl, $this->apiKey);
       $response = $client->checkToken();
       if ($response->getMessage() == "ok") {
         drupal_set_message("Connection established successfully.");
