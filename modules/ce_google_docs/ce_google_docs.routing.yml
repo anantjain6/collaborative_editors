@@ -8,14 +8,6 @@ ce_google_docs.settings:
   options:  
     _admin_route: TRUE 
 
-ce_google_docs.add_node:
-  path: '/google_docs/add_node'
-  defaults:
-    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::addNode'
-  methods:  [GET]
-  requirements:
-    _access: 'TRUE'
-
 ce_google_docs.list_users:
   path: '/google_docs/list_users'
   defaults:
