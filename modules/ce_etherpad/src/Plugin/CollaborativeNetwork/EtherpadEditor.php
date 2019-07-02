@@ -50,7 +50,7 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
    */
   public function testConnection() {
     try {
-      $client = new Client($this->apiUrl, $this->apiKey);
+      $client = new Client($this->apiKey, $this->apiUrl);
       $response = $client->checkToken();
       if ($response->getMessage() == "ok") {
         drupal_set_message("Connection established successfully.");
