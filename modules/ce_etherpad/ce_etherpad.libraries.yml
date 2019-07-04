@@ -1,0 +1,11 @@
+ce_etherpad:
+  version: VERSION
+  js:
+    js/editor.js: {}
+  css:
+    component:
+      styles/editor.css: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

@@ -13,18 +13,21 @@ use Drupal\Core\Url;
  * @preserveGlobalState disabled
  */
 class RoutesTest extends BrowserTestBase {
+
   /**
    * An admin user used for this test.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $adminUser;
+
   /**
    * A user without admin permission.
    *
    * @var \Drupal\Core\Session\AccountInterface
    */
   protected $unauthorizedUser;
+
   /**
    * The permissions of the admin user.
    *
@@ -33,6 +36,7 @@ class RoutesTest extends BrowserTestBase {
   protected $adminUserPermissions = [
     'access administration pages',
   ];
+
   /**
    * {@inheritdoc}
    */
@@ -43,6 +47,7 @@ class RoutesTest extends BrowserTestBase {
    */
   public function setUp() {
     parent::setUp();
+
     $this->adminUser = $this->drupalCreateUser($this->adminUserPermissions);
     $this->unauthorizedUser = $this->drupalCreateUser();
   }
@@ -55,6 +60,7 @@ class RoutesTest extends BrowserTestBase {
     $this->drupalLogin($this->adminUser);
     $this->drupalGet(URL::fromRoute('collaborative_editors.overview'));
     $this->assertResponse(200);
+
     // For user without admin permissions.
     $this->drupalLogin($this->unauthorizedUser);
     $this->drupalGet(URL::fromRoute('collaborative_editors.overview'));
