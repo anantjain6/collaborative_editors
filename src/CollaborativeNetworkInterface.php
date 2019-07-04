@@ -19,4 +19,12 @@ interface CollaborativeNetworkInterface extends PluginInspectionInterface {
    */
   public function set(int $node_id, string $content);
 
+  /**
+   * Get content of node.
+   *
+   * @param int $node_id
+   *   ID of Node.
+   */
+  public function get(int $node_id);
+
 }
