@@ -5,11 +5,46 @@ namespace Drupal\ce_google_docs\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Drupal\node\Entity\Node;
 
 /**
  * Class GoogleDocsController.
  */
 class GoogleDocsController extends ControllerBase {
+
+  /**
+   * To save/publish a node.
+   *
+   * @param Symfony\Component\HttpFoundation\Request $request
+   *   HttpRequest with various parameters of a a node.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   JsonResponse with Node's details.
+   */
+  public function publish(Request $request) {
+    $config = \Drupal::config('ce_google_docs.settings');
+    if ($request->request->get('apiKey') != $config->get('api_key')) {
+      return new JsonResponse(['error' => 'Invalid API Key.']);
+    }
+
+   // return new JsonResponse(['nid' => $request->query->get('body')]);
+    $node = Node::create([
+      'type' => $request->request->get('type'),
+      'created' => \Drupal::time()->getRequestTime(),
+      'uid' => $request->request->get('user'),
+      'title' => $request->request->get('title'),
+      'body' => [
+        'summary' => $request->request->get('summary'),
+        'value' => $request->request->get('body'),
+        'format' => 'full_html',
+      ],
+      'status' => $request->request->get('status'),
+    ]);
+    //Saving the node
+    $node->save();
+
+    return new JsonResponse(['nid' => $node->id()]);
+  }
 
   /**
    * To list all the Drupal Users.
