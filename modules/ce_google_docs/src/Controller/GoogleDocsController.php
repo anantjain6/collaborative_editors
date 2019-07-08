@@ -27,7 +27,7 @@ class GoogleDocsController extends ControllerBase {
       return new JsonResponse(['error' => 'Invalid API Key.']);
     }
 
-   // return new JsonResponse(['nid' => $request->query->get('body')]);
+    // Return new JsonResponse(['nid' => $request->query->get('body')]);.
     $node = Node::create([
       'type' => $request->request->get('type'),
       'created' => \Drupal::time()->getRequestTime(),
@@ -40,7 +40,7 @@ class GoogleDocsController extends ControllerBase {
       ],
       'status' => $request->request->get('status'),
     ]);
-    //Saving the node
+    // Saving the node.
     $node->save();
 
     return new JsonResponse(['nid' => $node->id()]);
