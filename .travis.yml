@@ -1,0 +1,55 @@
+language: php
+
+php:
+  - 7.1
+
+services:
+  - mysql
+
+before_install: 
+  - sudo apt-get update
+  - composer self-update
+  - phpenv rehash
+
+install: 
+  # add composer's global bin directory to the path
+  - export PATH="$HOME/.config/composer/vendor/bin:$PATH"
+
+  # Install Drush
+  - composer global require drush/drush:dev-master
+  - phpenv rehash
+
+  # Create MySQL Database
+  - mysql -e 'create database drupal;'
+  
+  # Download Drupal inside "drupal" directory
+  - cd $HOME
+  - mkdir -p tmp && cd tmp && composer require --no-interaction drupal/drupal && cd - && rm -rf drupal && mv tmp/vendor/drupal/drupal ./drupal && cd drupal && composer install && cd - && rm -rf tmp
+
+  # Setup drupal
+  - cd drupal/
+  # Install Drupal
+  - drush --verbose site-install --db-url=mysql://root:@127.0.0.1/drupal --yes
+  # PHPUnit testing framework version 6 or greater is required when running on PHP 7.0 or greater
+  - composer run-script drupal-phpunit-upgrade
+  # Set SIMPLETEST_BASE_URL of phpunit.xml.dist
+  - sed -i 's/name="SIMPLETEST_BASE_URL" value=""/name="SIMPLETEST_BASE_URL" value="http:\/\/localhost:8888"/g' core/phpunit.xml.dist
+  # Setup Drupal Coding Standards
+  - vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer
+  # Move module to its correct place
+  - mv $TRAVIS_BUILD_DIR modules/collaborative_editors
+  # Enable the modules
+  - drush pm-enable collaborative_editors
+  - drush pm-enable ce_etherpad
+  - drush pm-enable ce_google_docs
+  
+  # Run Drupal on port 8888
+  - drush --debug runserver :8888 > ~/debug.txt 2>&1 &
+
+script:
+  # Check Coding Standards
+  - vendor/bin/phpcs --standard=Drupal --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md --ignore=/modules/ce_etherpad/src/Plugin/Editor/EtherpadEditor.php modules/collaborative_editors/*
+  
+  # Run PHP Unit Test
+  - cd core/
+  - ../vendor/bin/phpunit --group collaborative_editors
