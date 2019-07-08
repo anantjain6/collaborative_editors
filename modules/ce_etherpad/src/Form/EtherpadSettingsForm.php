@@ -50,6 +50,8 @@ class EtherpadSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Etherpad API URL'),
       '#description' => $this->t('Enter Etherpad API URL. By default it is http://localhost:9001'),
       '#default_value' => $apiUrl,
+      '#required' => TRUE,
+      '#type' => 'url',
     ];
 
     $form['etherpad_api_key'] = [
@@ -57,6 +59,7 @@ class EtherpadSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Etherpad API Key'),
       '#description' => $this->t('Enter Etherpad API Key. You can find API Key in APIKEY.txt on root directory of Etherpad.'),
       '#default_value' => $apiKey,
+      '#required' => TRUE,
     ];
     $form['actions'] = [
       '#type' => 'actions',
