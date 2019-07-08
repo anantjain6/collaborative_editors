@@ -1,13 +1,9 @@
-.dropPadding td {
-  padding: 0px;
-}
-
-.pad {
+#etherpad {
   width: 100%;
   height: 500px;
 }
 
-.pad iframe {
+#etherpad iframe {
   width: 100%;
   height: 100%;
 }
