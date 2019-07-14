@@ -33,27 +33,23 @@ class GoogleDocsSettingsForm extends ConfigFormBase {
     $config = $this->config('ce_google_docs.settings');
 
     $apiKey = $config->get('api_key');
-    if (isset($_SESSION["api_key"])) {
-      $apiKey = $_SESSION["api_key"];
-      unset($_SESSION["api_key"]);
+    if (!isset($apiKey)) {
+      $apiKey = hash("sha256", rand());
+      $this->config('ce_google_docs.settings')
+        ->set('api_key', $apiKey)
+        ->save();
     }
     $form['api_key'] = [
       '#type' => 'textfield',
       '#title' => $this->t('API Key'),
       '#description' => $this->t('You need to enter this API Key in Google Docs Add-On.'),
       '#default_value' => $apiKey,
-      '#required' => TRUE,
-    ];
-    $form['actions'] = [
-      '#type' => 'actions',
-    ];
-    $form['actions']['generate_key'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Generate API Key'),
-      '#submit' => ['::generateKey'],
+      '#disabled' => TRUE,
     ];
 
-    return parent::buildForm($form, $form_state);
+    $form = parent::buildForm($form, $form_state);
+    $form['actions']['submit']['#value'] = t('Generate New API Key');
+    return $form;
   }
 
   /**
@@ -63,15 +59,8 @@ class GoogleDocsSettingsForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
 
     $this->config('ce_google_docs.settings')
-      ->set('api_key', $form_state->getValue('api_key'))
+      ->set('api_key', hash("sha256", rand()))
       ->save();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function generateKey(array &$form, FormStateInterface $form_state) {
-    $_SESSION['api_key'] = hash("sha256", rand());
   }
 
 }
