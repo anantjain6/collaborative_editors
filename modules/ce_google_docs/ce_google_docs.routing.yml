@@ -8,6 +8,14 @@ ce_google_docs.settings:
   options:  
     _admin_route: TRUE 
 
+ce_google_docs.update:
+  path: '/google_docs/update'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::update'
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'
+
 ce_google_docs.publish:
   path: '/google_docs/publish'
   defaults:

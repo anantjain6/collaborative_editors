@@ -13,6 +13,30 @@ use Drupal\node\Entity\Node;
 class GoogleDocsController extends ControllerBase {
 
   /**
+   * To update a node.
+   *
+   * @param Symfony\Component\HttpFoundation\Request $request
+   *   HttpRequest with various parameters of a a node.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   JsonResponse with Node's details.
+   */
+  public function update(Request $request) {
+    $config = \Drupal::config('ce_google_docs.settings');
+    if ($request->request->get('apiKey') != $config->get('api_key')) {
+      return new JsonResponse(['error' => 'Invalid API Key.']);
+    }
+
+    $node = Node::load($request->request->get('nid'));
+    $node->title = $request->request->get('title');
+    $node->body->summary = $request->request->get('summary');
+    $node->body->value = $request->request->get('body');
+    $node->save();
+
+    return new JsonResponse(['nid' => $node->id()]);
+  }
+
+  /**
    * To save/publish a node.
    *
    * @param Symfony\Component\HttpFoundation\Request $request
