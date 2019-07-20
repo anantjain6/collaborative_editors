@@ -148,24 +148,36 @@ class EtherpadEditor extends CollaborativeNetworkBase implements EtherpadEditorI
   /**
    * {@inheritdoc}
    */
-  public function createPad($authorMapper, $authorName = 'anonymous', $content = NULL, $groupMapper = NULL, $sessionTime = 0) {
+  public function createPad($authorMapper, $authorName = 'anonymous', $setSession = 1, $content = NULL, $groupMapper = NULL, $sessionTime = 0) {
     $client = $this->client;
 
-    $groupID = $this->createGroup($groupMapper);
-    $authorID = $this->createAuthor($authorMapper, $authorName);
-    $sessionID = $this->createSession($groupID, $authorID, $sessionTime);
-    $padID = '';
+    if ($setSession == 1) {
+      $groupID = $this->createGroup($groupMapper);
+      $authorID = $this->createAuthor($authorMapper, $authorName);
+      $sessionID = $this->createSession($groupID, $authorID, $sessionTime);
+      $padID = '';
 
-    // List all the Pad in Group.
-    $pad = $client->listPads($groupID)->getData('padIDs');
-    if (count($pad) > 0) {
-      $padID = $pad[0];
+      // List all the Pad in Group.
+      $pad = $client->listPads($groupID)->getData('padIDs');
+      if (count($pad) > 0) {
+        $padID = $pad[0];
+      }
+      else {
+        // Create Pad in Group.
+        $client->createGroupPad($groupID, 'node');
+
+        $padID = $groupID . '$node';
+      }
     }
     else {
-      // Create Pad in Group.
-      $client->createGroupPad($groupID, 'node');
-
-      $padID = $groupID . '$node';
+      if (isset($groupMapper)) {
+        $client->createPad($groupMapper);
+        $padID = $groupMapper;
+      }
+      else {
+        $padID = time();
+        $client->createPad($padID);
+      }
     }
 
     if (isset($content)) {

@@ -28,13 +28,13 @@ class EtherpadController extends ControllerBase {
     $nodeID = $request->query->get('nid');
     $response = [];
     if ($nodeID == 'add') {
-      $response['pid'] = $etherpad->createPad($user->uid, $user->name);
+      $response['pid'] = $etherpad->createPad($user->uid, $user->name, $config->get('session_cookie'));
     }
     else {
       $userID = \Drupal::currentUser()->id();
       $userName = User::load($userID)->get('name')->value;
       $content = $etherpad->get($nodeID);
-      $response['pid'] = $etherpad->createPad($userID, $userName, $content, $nodeID);
+      $response['pid'] = $etherpad->createPad($userID, $userName, $config->get('session_cookie'), $content, $nodeID);
     }
     return new JsonResponse($response);
   }

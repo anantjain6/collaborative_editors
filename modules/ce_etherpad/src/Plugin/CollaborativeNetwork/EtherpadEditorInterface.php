@@ -84,6 +84,8 @@ interface EtherpadEditorInterface extends CollaborativeNetworkInterface {
    *   A unique string to map with each Etherpad Author.
    * @param string $authorName
    *   (optional) The name of Author in Etherad.
+   * @param int $setSession
+   *   (optional) Wether session cookie to be set or not.
    * @param string $content
    *   (optional) The HTML content.
    * @param string $groupMapper
@@ -94,6 +96,6 @@ interface EtherpadEditorInterface extends CollaborativeNetworkInterface {
    * @return string
    *   The unique Pad ID.
    */
-  public function createPad($authorMapper, $authorName, $content, $groupMapper, $sessionTime);
+  public function createPad($authorMapper, $authorName, $setSession, $content, $groupMapper, $sessionTime);
 
 }
