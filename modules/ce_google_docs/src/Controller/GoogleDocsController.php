@@ -80,12 +80,21 @@ class GoogleDocsController extends ControllerBase {
       }
     }
 
+    $body_feild = '';
+    $fields = \Drupal::entityManager()->getFieldDefinitions('node', $request->request->get('type'));
+    foreach ($fields as $field => $value) {
+      if ($value->getType() == "text_with_summary") {
+        $body_feild = $field;
+        break;
+      }
+    }
+
     $node = Node::create([
       'type' => $request->request->get('type'),
       'created' => \Drupal::time()->getRequestTime(),
       'uid' => $request->request->get('user'),
       'title' => $request->request->get('title'),
-      'body' => [
+      $body_feild => [
         'summary' => $request->request->get('summary'),
         'value' => $body,
         'format' => 'full_html',
@@ -96,6 +105,40 @@ class GoogleDocsController extends ControllerBase {
     $node->save();
 
     return new JsonResponse(['nid' => $node->id()]);
+  }
+
+  /**
+   * To list all the eligible Drupal Content Type.
+   *
+   * @param Symfony\Component\HttpFoundation\Request $request
+   *   HttpRequest with apiKey parameter as API Key.
+   *
+   * @return Symfony\Component\HttpFoundation\JsonResponse
+   *   JsonResponse with Content Type(s).
+   */
+  public function listContentType(Request $request) {
+    $config = \Drupal::config('ce_google_docs.settings');
+    if ($request->query->get('apiKey') != $config->get('api_key')) {
+      return new JsonResponse(['error' => 'Invalid API Key.']);
+    }
+    $content_type = [];
+    $nodes = entity_get_bundles('node');
+    // Loop through each content type.
+    foreach ($nodes as $type => $node) {
+      // Get all fields on the content type
+      $fields = \Drupal::entityManager()->getFieldDefinitions('node', $type);
+      foreach ($fields as $field => $value) {
+        if ($value->getType() == "text_with_summary") {
+          array_push($content_type, [
+            'id' => $type,
+            'name' => $node['label'],
+          ]);
+          break;
+        }
+      }
+    }
+
+    return new JsonResponse($content_type);
   }
 
   /**

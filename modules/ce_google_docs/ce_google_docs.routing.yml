@@ -24,6 +24,14 @@ ce_google_docs.publish:
   requirements:
     _access: 'TRUE'
 
+ce_google_docs.list_content_type:
+  path: '/google_docs/list_content_type'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::listContentType'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
 ce_google_docs.list_users:
   path: '/google_docs/list_users'
   defaults:
