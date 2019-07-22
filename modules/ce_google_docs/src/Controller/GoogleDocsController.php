@@ -6,6 +6,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Drupal\node\Entity\Node;
+use GuzzleHttp\Client;
 
 /**
  * Class GoogleDocsController.
@@ -27,10 +28,24 @@ class GoogleDocsController extends ControllerBase {
       return new JsonResponse(['error' => 'Invalid API Key.']);
     }
 
+    $body = $request->request->get('body');
+    if ($request->request->get('img_store') == 'drupal') {
+      preg_match_all('/< *img[^>]*src *= *["\']?([^"\']*)/i', $body, $result);
+      $result = $result[1];
+      foreach ($result as $src) {
+        $client = new Client();
+        $response = $client->request('GET', $src);
+        $name = str_replace(" ", "_", substr($response->getHeader('Content-Disposition')[0], 17, -1));
+        $file = system_retrieve_file($src, 'public://' . $name, TRUE, $replace = FILE_EXISTS_RENAME);
+        $new_src_url = explode($_SERVER['HTTP_HOST'], $file->url())[1];
+        $body = str_replace($src, $new_src_url, $body);
+      }
+    }
+
     $node = Node::load($request->request->get('nid'));
     $node->title = $request->request->get('title');
     $node->body->summary = $request->request->get('summary');
-    $node->body->value = $request->request->get('body');
+    $node->body->value = $body;
     $node->save();
 
     return new JsonResponse(['nid' => $node->id()]);
@@ -51,7 +66,20 @@ class GoogleDocsController extends ControllerBase {
       return new JsonResponse(['error' => 'Invalid API Key.']);
     }
 
-    // Return new JsonResponse(['nid' => $request->query->get('body')]);.
+    $body = $request->request->get('body');
+    if ($request->request->get('img_store') == 'drupal') {
+      preg_match_all('/< *img[^>]*src *= *["\']?([^"\']*)/i', $body, $result);
+      $result = $result[1];
+      foreach ($result as $src) {
+        $client = new Client();
+        $response = $client->request('GET', $src);
+        $name = str_replace(" ", "_", substr($response->getHeader('Content-Disposition')[0], 17, -1));
+        $file = system_retrieve_file($src, 'public://' . $name, TRUE, $replace = FILE_EXISTS_RENAME);
+        $new_src_url = explode($_SERVER['HTTP_HOST'], $file->url())[1];
+        $body = str_replace($src, $new_src_url, $body);
+      }
+    }
+
     $node = Node::create([
       'type' => $request->request->get('type'),
       'created' => \Drupal::time()->getRequestTime(),
@@ -59,7 +87,7 @@ class GoogleDocsController extends ControllerBase {
       'title' => $request->request->get('title'),
       'body' => [
         'summary' => $request->request->get('summary'),
-        'value' => $request->request->get('body'),
+        'value' => $body,
         'format' => 'full_html',
       ],
       'status' => $request->request->get('status'),
