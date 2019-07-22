@@ -125,7 +125,7 @@ class GoogleDocsController extends ControllerBase {
     $nodes = entity_get_bundles('node');
     // Loop through each content type.
     foreach ($nodes as $type => $node) {
-      // Get all fields on the content type
+      // Get all fields on the content type.
       $fields = \Drupal::entityManager()->getFieldDefinitions('node', $type);
       foreach ($fields as $field => $value) {
         if ($value->getType() == "text_with_summary") {
