@@ -1,0 +1,11 @@
+name: Collaborative Editor Google Docs
+description: Allows integration with Google Docs.
+package: Collaborative Editors
+dependencies:
+  - collaborative_editors
+  - image
+
+type: module
+core: 8.x
+
+configure: ce_google_docs.settings

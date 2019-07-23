@@ -1,0 +1,49 @@
+ce_google_docs.settings:  
+  path: '/admin/config/collaborative-editors/google-docs'  
+  defaults:  
+    _form: '\Drupal\ce_google_docs\Form\GoogleDocsSettingsForm'  
+    _title: 'Collaborative Editor Google Docs Settings'  
+  requirements:  
+    _permission: 'access administration pages'  
+  options:  
+    _admin_route: TRUE 
+
+ce_google_docs.update:
+  path: '/google_docs/update'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::update'
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'
+
+ce_google_docs.publish:
+  path: '/google_docs/publish'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::publish'
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'
+
+ce_google_docs.list_content_type:
+  path: '/google_docs/list_content_type'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::listContentType'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+ce_google_docs.list_users:
+  path: '/google_docs/list_users'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::listUser'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
+
+ce_google_docs.test_connection:
+  path: '/google_docs/test_connection'
+  defaults:
+    _controller: '\Drupal\ce_google_docs\Controller\GoogleDocsController::testConnection'
+  methods:  [GET]
+  requirements:
+    _access: 'TRUE'
